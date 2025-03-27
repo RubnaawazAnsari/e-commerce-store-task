@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
-import { App as AntdApp } from 'antd'
 import { Providers } from '../providers'
 import Navbar from "@/components/navbar/Navbar"
 import Footer from "@/components/footer/Footer"
@@ -29,13 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Providers>
-          <AntdApp>
-            <Navbar />
-              {children}
-            <Footer />
-          </AntdApp>
-        </Providers>
+      <Providers>
+          <Navbar />
+            {children}
+          <Footer />
+      </Providers>
       </body>
     </html>
   );

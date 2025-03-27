@@ -33,31 +33,6 @@ export default function CheckoutSuccessPage() {
         ]}
       />
 
-      <Card title="Order Summary" className="mt-8 max-w-2xl mx-auto">
-        <div className="space-y-4">
-          {cartItems.map(item => (
-            <div key={item.id} className="flex justify-between">
-              <div>
-                <Text strong>{item.title}</Text>
-                <Text type="secondary" className="block">
-                  {item.quantity} × ${item.price.toFixed(2)}
-                </Text>
-              </div>
-              <Text>${(item.price * item.quantity).toFixed(2)}</Text>
-            </div>
-          ))}
-
-          <div className="border-t border-gray-200 my-4"></div>
-
-          <div className="flex justify-between">
-            <Text strong className="text-lg">Total</Text>
-            <Text strong className="text-lg">
-              ${totalPrice.toFixed(2)}
-            </Text>
-          </div>
-        </div>
-      </Card>
-
       <div className="mt-8 text-center">
         <Text type="secondary">
           A confirmation email has been sent to your registered email address.

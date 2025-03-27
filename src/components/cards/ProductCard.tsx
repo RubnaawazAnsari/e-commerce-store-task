@@ -3,8 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Button, Card, Rate } from 'antd'
-import { App } from 'antd'
+import { Button, Card, Rate, App } from 'antd'
 
 import { addToCart } from '@/store/reducers/cartSlice'
 
@@ -26,20 +25,12 @@ interface IProduct {
 const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch()
   const { message: messageApi } = App.useApp()
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-    return () => setIsMounted(false)
-  }, [])
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation()
     e.preventDefault()
     dispatch(addToCart(product))
-    if (isMounted) {
-      messageApi.success(`${product.title} added to cart!`)
-    }
+    messageApi.success(`${product.title} added to cart!`)
   }
 
   return (
@@ -55,6 +46,7 @@ const ProductCard = ({ product }: { product: IProduct }) => {
               fill
               className="object-contain p-4"
               priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
         }

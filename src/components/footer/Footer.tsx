@@ -48,7 +48,7 @@ const Footer = () => {
 
           
       <div className="mt-10 text-center text-gray-500">
-        <p>&copy; {new Date().getFullYear()} Fake Store. All rights reserved.</p>
+        <p>Fake Store. All rights reserved.</p>
       </div>
     </div>
   );
