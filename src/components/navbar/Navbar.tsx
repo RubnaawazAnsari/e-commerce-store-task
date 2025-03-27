@@ -1,21 +1,38 @@
 'use client'
-import React from "react"
-import { Menu, Button, Drawer, Grid, Badge, Dropdown } from "antd"
+import React, { useState, useEffect } from "react"
+import { Badge, Dropdown, Drawer } from "antd"
 import { MenuOutlined, ShoppingCartOutlined } from "@ant-design/icons"
 import { useAppSelector } from '@/store/hooks'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-const { useBreakpoint } = Grid
+const useResponsive = () => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkScreenSize()
+
+    window.addEventListener('resize', checkScreenSize)
+
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
+
+  return { isMobile }
+}
 
 const Navbar = () => {
-  const [visible, setVisible] = React.useState(false)
-  const screens = useBreakpoint()
+  const [drawerVisible, setDrawerVisible] = useState(false)
+  const { isMobile } = useResponsive()
+  const pathname = usePathname()
   const { items: cartItems } = useAppSelector(state => state.cart)
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
 
-  const menuItems = [
-    { label: "Home", key: "home", href: "/" },
-    { label: "Categories", key: "categories", href: "/categories" },
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "Categories", href: "/categories" },
   ]
 
   const cartMenu = {
@@ -38,8 +55,10 @@ const Navbar = () => {
               )}
             </div>
             {cartItems.length > 0 && (
-              <Link href="/cart">
-                <Button  className="w-full mt-4 !bg-[#0a96d4] !text-white border-none !hover:bg-[#087bb3]">Go to Cart</Button>
+              <Link href="/cart" className="block mt-4">
+                <button className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                  Go to Cart
+                </button>
               </Link>
             )}
           </div>
@@ -49,65 +68,78 @@ const Navbar = () => {
   }
 
   return (
-    <div className="flex items-center justify-between h-26 max-[769px]:h-20 px-16 max-[769px]:px-6 bg-white shadow-2xl sticky top-0 z-50">
-      <Link href="/">
-        <h3 className="text-[32px] max-[769px]:text-[24px] font-bold text-[#0a96d4]"><span className="text-[#000]">FAKE</span>STORE</h3>
+    <nav className="flex items-center justify-between px-8 py-4 bg-white shadow-sm">
+      <Link href="/" className="text-2xl font-bold">
+        <span className="text-black">FAKE</span>
+        <span className="text-[#0a96d4]">STORE</span>
       </Link>
 
-      {screens.xl ? (
-        <div className="flex items-center space-x-6">
-
-          <Menu
-            mode="horizontal"
-            items={menuItems.map(item => ({
-              ...item,
-              label: <Link href={item.href}>{item.label}</Link>
-            }))}
-            defaultSelectedKeys={["home"]}
-            className="border-none [&_.ant-menu-item]:text-[18px]"
-          />
-          <Dropdown menu={cartMenu} trigger={['click']} placement="bottomRight" arrow>
-            <Badge count={totalItems} offset={[0, 0]}>
-              <ShoppingCartOutlined className="!text-[32px] text-[#0a96d4] cursor-pointer" />
-            </Badge>
-          </Dropdown>
-        </div>
-      ) : (
-        <>
-          <div className="flex items-center gap-3 space-x-4">
-            <Dropdown menu={cartMenu} trigger={['click']} placement="bottomRight" arrow>
-              <Badge count={totalItems} offset={[0, 0]}>
-                <ShoppingCartOutlined className="!text-[32px] cursor-pointer" />
-              </Badge>
-            </Dropdown>
-
-            <Button
-              type="text"
-              icon={<MenuOutlined />}
-              onClick={() => setVisible(true)}
-              className="!text-[24px]"
-            />
+      <div className="flex items-center space-x-4">
+        {!isMobile ? (
+          <div className="flex items-center space-x-6">
+            {navItems.map((item) => (
+              <Link 
+                key={item.href} 
+                href={item.href} 
+                className={`
+                  !text-gray-700 
+                  hover:text-blue-500 
+                  transition-colors 
+                  ${pathname === item.href 
+                    ? 'font-bold text-[#0a96d4] border-b-2 border-[#0a96d4]' 
+                    : ''}
+                `}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
-          <Drawer
-            title="Menu"
-            placement="right"
-            onClose={() => setVisible(false)}
-            open={visible}
-          >
-            <Menu
-              mode="vertical"
-              items={menuItems.map(item => ({
-                ...item,
-                label: <Link href={item.href}>{item.label}</Link>
-              }))}
-              onClick={() => setVisible(false)}
-              className="border-none"
-            />
-          </Drawer>
-        </>
-      )}
-    </div>
+        ) : (
+          <>
+            <button 
+              onClick={() => setDrawerVisible(true)} 
+              className="!text-gray-700 hover:text-blue-500"
+            >
+              <MenuOutlined className="text-2xl" />
+            </button>
+            <Drawer
+              title="Menu"
+              placement="right"
+              onClose={() => setDrawerVisible(false)}
+              open={drawerVisible}
+            >
+              {navItems.map((item) => (
+                <div key={item.href} className="py-2">
+                  <Link 
+                    href={item.href} 
+                    onClick={() => setDrawerVisible(false)}
+                    className={`
+                      block 
+                      !text-gray-700 
+                      hover:text-blue-500 
+                      ${pathname === item.href 
+                        ? 'font-bold text-[#0a96d4]' 
+                        : ''}
+                    `}
+                  >
+                    {item.label}
+                  </Link>
+                </div>
+              ))}
+            </Drawer>
+          </>
+        )}
+
+        <Dropdown menu={cartMenu} trigger={['click']} placement="bottomRight">
+          <div className="relative cursor-pointer">
+            <Badge count={totalItems} size="small">
+              <ShoppingCartOutlined className="text-2xl !text-gray-700 hover:text-blue-500 transition-colors" />
+            </Badge>
+          </div>
+        </Dropdown>
+      </div>
+    </nav>
   )
 }
 
-export default Navbar;
+export default Navbar
