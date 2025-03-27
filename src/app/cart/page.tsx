@@ -1,16 +1,17 @@
 'use client'
-import { Table, Button, InputNumber, Space, Typography, Grid } from 'antd'
-import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { removeFromCart, updateQuantity, clearCart } from '@/store/reducers/cartSlice'
-import Link from 'next/link'
+import Link from 'next/link';
+import Image from 'next/image';
+import { Table, Button, InputNumber, Space, Typography } from 'antd';
+
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+
+import { removeFromCart, updateQuantity, clearCart } from '@/store/reducers/cartSlice';
 
 const { Title, Text } = Typography
-const { useBreakpoint } = Grid
 
 const CartPage = () => {
   const { items: cartItems } = useAppSelector(state => state.cart)
   const dispatch = useAppDispatch()
-  const screens = useBreakpoint()
   
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0)
   const totalPrice = cartItems.reduce(
@@ -26,7 +27,7 @@ const CartPage = () => {
       render: (text: string, record: any) => (
         <div className="flex flex-col">
           <div className="flex items-center mb-2">
-            <img 
+            <Image 
               src={record.image} 
               alt={text} 
               className="w-12 h-12 object-contain mr-2"
@@ -66,7 +67,7 @@ const CartPage = () => {
       key: 'title',
       render: (text: string, record: any) => (
         <div className="flex items-center">
-          <img 
+          <Image
             src={record.image} 
             alt={text} 
             className="w-16 h-16 object-contain mr-4"

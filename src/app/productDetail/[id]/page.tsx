@@ -1,9 +1,12 @@
 'use client'
-import { useGetProductByIdQuery } from '@/__Api__/productApi'
-import { Card, Button, Select, Rate, message } from 'antd'
+import Image from 'next/image';
 import { useDispatch } from 'react-redux'
-import { addToCart } from '@/store/reducers/cartSlice'
 import { useParams } from 'next/navigation'
+import { Card, Button, Rate, message } from 'antd'
+
+import { useGetProductByIdQuery } from '@/__Api__/productApi'
+
+import { addToCart } from '@/store/reducers/cartSlice'
 
 const ProductDetailPage = () => {
   const params = useParams()
@@ -29,7 +32,7 @@ const ProductDetailPage = () => {
       <Card className="w-full mx-auto shadow-lg rounded-lg bg-white">
         <div className="grid grid-cols-1 md:grid-cols-2 h-[500px]">
           <div className="flex items-center justify-center">
-            <img
+            <Image
               src={product.image}
               alt={product.title}
               className="h-[500px] object-contain p-8"

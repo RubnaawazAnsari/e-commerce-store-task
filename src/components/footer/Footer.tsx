@@ -1,4 +1,3 @@
-import { Layout } from "antd";
 import { FacebookOutlined, TwitterOutlined, InstagramOutlined } from "@ant-design/icons";
 
 

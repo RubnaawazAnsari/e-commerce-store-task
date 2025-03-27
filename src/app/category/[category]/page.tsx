@@ -1,12 +1,14 @@
 'use client'
-import { useState } from 'react'
-import { useParams } from 'next/navigation'
-import { useGetProductsByCategoryQuery } from '@/__Api__/productApi'
-import { Card, Select, Pagination, Button, Input, Row, Col, Typography, Breadcrumb } from 'antd'
-import ProductCard from '@/components/cards/ProductCard'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { useState } from 'react'
+import { Select, Pagination, Button, Input, Row, Col, Typography, Breadcrumb } from 'antd'
 
-const { Title, Text } = Typography
+import { useGetProductsByCategoryQuery } from '@/__Api__/productApi'
+
+import ProductCard from '@/components/cards/ProductCard'
+
+const { Title } = Typography
 const { Option } = Select
 const { Search } = Input
 

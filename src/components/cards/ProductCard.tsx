@@ -1,15 +1,29 @@
 'use client'
-import { Button, Card, Rate } from 'antd'
-import { useDispatch } from 'react-redux'
-import { addToCart } from '@/store/reducers/cartSlice'
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Button, Card, Rate } from 'antd'
 import { App } from 'antd'
+
+import { addToCart } from '@/store/reducers/cartSlice'
 
 const { Meta } = Card
 
-const ProductCard = ({ product }: { product: any }) => {
+interface IProduct {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+}
+
+const ProductCard = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch()
   const { message: messageApi } = App.useApp()
   const [isMounted, setIsMounted] = useState(false)

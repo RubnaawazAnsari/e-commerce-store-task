@@ -1,9 +1,8 @@
-// src/app/checkout/page.tsx
 'use client'
 import { useForm } from 'react-hook-form'
+import { useAppSelector } from '@/store/hooks'
 import { Button, Form, Input, Radio, Card, Typography, Divider } from 'antd'
-import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { clearCart } from '@/store/reducers/cartSlice'
+
 import Link from 'next/link'
 
 const { Title, Text } = Typography
@@ -28,9 +27,7 @@ type FormValues = {
 
 export default function CheckoutPage() {
   const { items:cartItems, totalPrice } = useAppSelector(state => state.cart)
-  const dispatch = useAppDispatch()
   const {
-    control,
     handleSubmit,
     formState: { errors },
     watch,
@@ -42,7 +39,7 @@ export default function CheckoutPage() {
 
   const paymentMethod = watch('paymentMethod')
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = () => {
     window.location.href = '/checkout/success'
   }
 

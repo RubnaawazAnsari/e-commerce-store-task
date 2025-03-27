@@ -1,11 +1,12 @@
 'use client'
-import { Button, Card, Typography, Space, Result } from 'antd'
 import Link from 'next/link'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { ShoppingCartOutlined, SmileOutlined } from '@ant-design/icons'
+import { Button, Card, Typography, Result } from 'antd'
+import { SmileOutlined } from '@ant-design/icons'
+
 import { clearCart } from '@/store/reducers/cartSlice'
 
-const { Title, Text } = Typography
+const { Text } = Typography
 
 export default function CheckoutSuccessPage() {
   const { items: cartItems, totalPrice } = useAppSelector(state => state.cart)

@@ -1,9 +1,11 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { useGetAllCategoriesQuery, useGetAllProductsQuery, useGetProductsByCategoryQuery } from '@/__Api__/productApi'
-import { Checkbox, Pagination, Select, Input, Button, Row, Col, Card, Typography, Spin } from 'antd'
-import ProductCard from '@/components/cards/ProductCard'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Checkbox, Pagination, Select, Input, Button, Row, Col, Card, Typography, Spin } from 'antd';
+
+import { useGetAllCategoriesQuery, useGetAllProductsQuery, useGetProductsByCategoryQuery } from '@/__Api__/productApi';
+
+import ProductCard from '@/components/cards/ProductCard';
 
 const { Title, Text } = Typography
 const { Option } = Select

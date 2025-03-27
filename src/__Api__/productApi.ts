@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { authenticationConfig } from "../config";
@@ -32,5 +31,3 @@ export const {
   useGetAllCategoriesQuery,
   useGetProductsByCategoryQuery,
 } = productsApi;
-
-export const fetchAllProducts = () => axios.get(`${baseUrl}/products`);

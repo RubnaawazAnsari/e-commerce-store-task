@@ -1,3 +1,3 @@
 export const authenticationConfig = {
-  baseUrl: process.env.NEST_FAKE_API_BASE_URL,
+  baseUrl: process.env.NEXT_PUBLIC_FAKE_API_BASE_URL,
 };
