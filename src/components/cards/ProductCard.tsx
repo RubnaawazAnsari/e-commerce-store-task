@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, Card, Rate, App } from 'antd'
 
